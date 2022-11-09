@@ -34,8 +34,23 @@ class NewsListPage extends StatelessWidget {
               CategoryChips(
                   onCategorySelected: (category) =>
                       getCategoryNews(context, category)),
-              //todo 記事表示
-              Expanded(child: Center(child: CircularProgressIndicator())),
+              //記事表示
+              Expanded(child:
+                  Consumer<NewsListViewModel>(builder: (context, model, child) {
+                // return CircularProgressIndicator();
+                return model.isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.builder(
+                        itemCount: model.articles.length,
+                        itemBuilder: (context, int position) => ListTile(
+                          title: Text(model.articles[position].title ?? "タイトル"),
+                          subtitle: Text(
+                              model.articles[position].description ?? "記事"),
+                        ),
+                      );
+              })),
             ],
           ),
         ),
