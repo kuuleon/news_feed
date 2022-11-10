@@ -27,10 +27,10 @@ class NewsListViewModel extends ChangeNotifier {
   List<Article> get articles => _articles;
 
   //viewから呼び出すメソッド
-  getNews(
+  Future<void> getNews(
       {required st.SearchType searchType,
       String? keyword,
-      Category? category}) {
+      Category? category}) async {
     //viewModelから呼び出す
     // それぞれのプロパティに引数をセットする
     _searchType = searchType;
@@ -44,7 +44,7 @@ class NewsListViewModel extends ChangeNotifier {
     print(
         "[ViewModel] searchType: $searchType / keyword: $keyword / category: ${category?.nameJp}");
 
-    _repository.getNews(
+    _articles = await _repository.getNews(
       searchType: _searchType,
       keyword: _keyword,
       category: _category,
