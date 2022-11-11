@@ -6,7 +6,9 @@ import 'package:news_feed/repository/news_repository.dart';
 
 //changeNotifierの設定 4つのプロパティを設定
 class NewsListViewModel extends ChangeNotifier {
-  final NewsRepository _repository = NewsRepository();
+  final NewsRepository _repository;
+
+  NewsListViewModel({repository}) : _repository = repository;
 
   //カプセル化
   // _searchTypeはクラスの外側からアクセスできない

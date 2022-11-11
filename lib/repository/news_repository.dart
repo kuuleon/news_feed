@@ -18,6 +18,9 @@ class NewsRepository {
       "https://newsapi.org/v2/top-headlines?country=jp"; //baseurl は変数にする
   static const API_KEY = "4701c76a4092416898a689d2f595d08d";
 
+  final NewsDao _dao;
+  NewsRepository({dao}) : _dao = dao;
+
   Future<List<Article>> getNews(
       {required SearchType searchType,
       String? keyword,
@@ -53,12 +56,11 @@ class NewsRepository {
   }
 
   Future<List<Article>> insertAndReadFromDB(responseBody) async {
-    final dao = myDatabase.newsDao;
     final articles = News.fromJson(responseBody).articles;
 
     //WEBから取得した記事リスト（dartのモデルクラス;Article）をDBのテーブルクラス（Articles）に変換してDB登録・DBから取得
     final ArticleRecords =
-        await dao.insertAndReadNewsFromDB(articles.toArticleRecords(articles));
+        await _dao.insertAndReadNewsFromDB(articles.toArticleRecords(articles));
 
     // DBから取得したデータをモデルクラスに再変換して返す
     return ArticleRecords.toArticles(ArticleRecords);

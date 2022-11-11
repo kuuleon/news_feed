@@ -5,7 +5,9 @@ import 'package:news_feed/data/search_type.dart' as st;
 import '../data/category_info.dart'; //asにしないとimportできない？
 
 class HeadLineViewModel extends ChangeNotifier {
-  final NewsRepository _repository = NewsRepository();
+  final NewsRepository _repository;
+
+  HeadLineViewModel({repository}) : _repository = repository;
 
   //カプセル化
   // _searchTypeはクラスの外側からアクセスできない
